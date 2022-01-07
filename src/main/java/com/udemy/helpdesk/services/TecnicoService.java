@@ -52,4 +52,11 @@ public class TecnicoService {
     }
 
 
+    public Tecnico update(Integer id, TecnicoDTO dto) {
+        dto.setId(id);
+        Tecnico oldTecnico = findById(id);
+        validaPorCpfEEmail(dto);
+        oldTecnico = new Tecnico(dto);
+        return tecnicoRepository.save(oldTecnico);
+    }
 }
