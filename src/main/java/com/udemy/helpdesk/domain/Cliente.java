@@ -1,6 +1,7 @@
 package com.udemy.helpdesk.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.udemy.helpdesk.domain.dto.ClienteDTO;
 import com.udemy.helpdesk.domain.enums.Perfil;
 
 import javax.persistence.Entity;
@@ -21,6 +22,12 @@ public class Cliente extends Pessoa{
         super();
         addPerfil(Perfil.CLIENTE);
     }
+
+    public Cliente(ClienteDTO dto) {
+        super(dto.getId(), dto.getNome(), dto.getCpf(), dto.getEmail(), dto.getSenha());
+        addPerfil(Perfil.CLIENTE);
+    }
+
 
     public Cliente(Integer id, String nome, String cpf, String email, String senha) {
         super(id, nome, cpf, email, senha);
