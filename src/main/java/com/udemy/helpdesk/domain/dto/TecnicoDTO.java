@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.udemy.helpdesk.domain.Tecnico;
 import com.udemy.helpdesk.domain.enums.Perfil;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -14,9 +14,13 @@ import java.util.stream.Collectors;
 public class TecnicoDTO implements Serializable {
 
     protected Integer id;
+    @NotNull(message = "O campo nome é obrigatório")
     protected String nome;
+    @NotNull(message = "O campo cpf é obrigatório")
     protected String cpf;
+    @NotNull(message = "O campo email é obrigatório")
     protected String email;
+    @NotNull(message = "O campo senha é obrigatório")
     protected String senha;
     protected Set<Integer> perfis = new HashSet<>();
     @JsonFormat(pattern = "dd/MM/yyyy")
