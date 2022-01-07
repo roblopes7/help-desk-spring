@@ -1,6 +1,7 @@
 package com.udemy.helpdesk.resources;
 
 import com.udemy.helpdesk.domain.Tecnico;
+import com.udemy.helpdesk.domain.dto.TecnicoDTO;
 import com.udemy.helpdesk.services.TecnicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -18,9 +19,9 @@ public class TecnicoResource {
     TecnicoService tecnicoService;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Tecnico> findById(@PathVariable("id") Integer id){
+    public ResponseEntity<TecnicoDTO> findById(@PathVariable("id") Integer id){
         Tecnico obj = tecnicoService.findById(id);
-        return ResponseEntity.ok().body(obj);
+        return ResponseEntity.ok().body(new TecnicoDTO(obj));
     }
 
 }
