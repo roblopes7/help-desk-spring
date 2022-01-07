@@ -1,6 +1,7 @@
 package com.udemy.helpdesk.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.udemy.helpdesk.domain.enums.Perfil;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -15,10 +16,13 @@ public class Tecnico extends Pessoa{
     private List<Chamado> chamados = new ArrayList<>();
 
     public Tecnico() {
+        super();
+        addPerfis(Perfil.TECNICO);
     }
 
     public Tecnico(Integer id, String nome, String cpf, String email, String senha) {
         super(id, nome, cpf, email, senha);
+        addPerfis(Perfil.TECNICO);
     }
 
     public List<Chamado> getChamados() {

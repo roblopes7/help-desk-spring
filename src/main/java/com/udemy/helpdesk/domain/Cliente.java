@@ -1,7 +1,7 @@
 package com.udemy.helpdesk.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.udemy.helpdesk.domain.enums.Perfil;
-import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
