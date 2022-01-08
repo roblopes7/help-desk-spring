@@ -8,6 +8,7 @@ import com.udemy.helpdesk.repositories.ClienteRepository;
 import com.udemy.helpdesk.services.exceptions.DataIntegrityViolationException;
 import com.udemy.helpdesk.services.exceptions.ObjectNotFounException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,9 @@ public class ClienteService {
     @Autowired
     PessoaRepository pessoaRepository;
 
+    @Autowired
+    BCryptPasswordEncoder encoder;
+
     public Cliente findById(Integer id){
         Optional<Cliente> obj = clienteRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFounException("Objeto não encontrado! Id: " + id));
@@ -34,6 +38,7 @@ public class ClienteService {
     public Cliente create(ClienteDTO dto) {
         dto.setId(null);
         validaPorCpfEEmail(dto);
+        dto.setSenha(encoder.encode(dto.getSenha()));
         Cliente cliente = new Cliente(dto);
         return clienteRepository.save(cliente);
     }

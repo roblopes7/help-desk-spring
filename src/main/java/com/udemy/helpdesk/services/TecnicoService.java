@@ -8,6 +8,7 @@ import com.udemy.helpdesk.repositories.TecnicoRepository;
 import com.udemy.helpdesk.services.exceptions.DataIntegrityViolationException;
 import com.udemy.helpdesk.services.exceptions.ObjectNotFounException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,9 @@ public class TecnicoService {
     @Autowired
     PessoaRepository pessoaRepository;
 
+    @Autowired
+    BCryptPasswordEncoder encoder;
+
     public Tecnico findById(Integer id){
         Optional<Tecnico> obj = tecnicoRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFounException("Objeto não encontrado! Id: " + id));
@@ -34,6 +38,7 @@ public class TecnicoService {
     public Tecnico create(TecnicoDTO dto) {
         dto.setId(null);
         validaPorCpfEEmail(dto);
+        dto.setSenha(encoder.encode(dto.getSenha()));
         Tecnico tecnico = new Tecnico(dto);
         return tecnicoRepository.save(tecnico);
     }
