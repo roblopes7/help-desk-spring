@@ -22,6 +22,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private JWTUtil jwtUtil;
 
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
+        super();
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
     }
@@ -31,8 +32,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         try {
             CredenciaisDTO creds = new ObjectMapper().readValue(request.getInputStream(), CredenciaisDTO.class);
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(creds.getEmail(), creds.getSenha(), new ArrayList<>());
-            Authentication authentication = authenticationManager.authenticate(authenticationToken);
-            return authentication;
+            return authenticationManager.authenticate(authenticationToken);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -44,12 +44,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String username = ((UserSS) authResult.getPrincipal()).getUsername();
         String token = jwtUtil.generateToken(username);
         response.setHeader("access-control-exposed-headers", "Authorization");
-        response.setHeader("Authorization", "Bearer" + token);
+        response.setHeader("Authorization", "Bearer " + token);
     }
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-
         response.setStatus(401);
         response.setContentType("application/json");
         response.getWriter().append(json());
