@@ -60,6 +60,9 @@ public class TecnicoService {
     public Tecnico update(Integer id, TecnicoDTO dto) {
         dto.setId(id);
         Tecnico oldTecnico = findById(id);
+        if(!dto.getSenha().equals(oldTecnico.getSenha())) {
+            dto.setSenha(encoder.encode(dto.getSenha()));
+        }
         validaPorCpfEEmail(dto);
         oldTecnico = new Tecnico(dto);
         return tecnicoRepository.save(oldTecnico);
