@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.udemy.helpdesk.domain.Cliente;
 import com.udemy.helpdesk.domain.Tecnico;
 import com.udemy.helpdesk.domain.enums.Perfil;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -18,6 +19,7 @@ public class ClienteDTO implements Serializable {
     @NotNull(message = "O campo nome é obrigatório")
     protected String nome;
     @NotNull(message = "O campo cpf é obrigatório")
+    @CPF
     protected String cpf;
     @NotNull(message = "O campo email é obrigatório")
     protected String email;
